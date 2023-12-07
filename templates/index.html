@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Request System</title>
+</head>
+<body>
+
+<!-- Tenant's Maintenance Request Form -->
+<h1>Tenant</h1>
+<h1>Maintenance Request Form</h1>
+
+<form action="/submit_request" method="post">
+    <label for="apartment_number">Apartment Number:</label>
+    <input type="text" name="apartment_number" required><br>
+
+    <label for="area_of_problem">Area of Problem:</label>
+    <input type="text" name="area_of_problem" required><br>
+
+    <label for="problem_description">Problem Description:</label>
+    <textarea name="problem_description" required></textarea><br>
+
+    <label for="photo_url">Photo URL (optional):</label>
+    <input type="text" name="photo_url" id="photo_url"><br>
+    <button type="button" onclick="previewImage()">Preview Image</button>
+    <div id="image_preview"></div>
+
+    <input type="submit" value="Submit Request">
+</form>
+
+<script>
+    function previewImage() {
+        var imageUrl = document.getElementById('photo_url').value;
+        var imagePreview = document.getElementById('image_preview');
+
+        // Check if the URL is not empty
+        if (imageUrl.trim() !== '') {
+            var img = new Image();
+            img.onload = function () {
+                imagePreview.innerHTML = '<img src="' + imageUrl + '" alt="Image Preview" style="max-width: 300px;">';
+            };
+            img.onerror = function () {
+                imagePreview.innerHTML = 'Failed to load image from the provided URL';
+            };
+            img.src = imageUrl;
+        } else {
+            imagePreview.innerHTML = 'No image URL provided';
+        }
+    }
+</script>
+
+
+<h1>Staff Member: (Press "Filter Requests")</h1>
+<!-- Staff's Browse and Update Requests Page -->
+<h1>Browse and Update Maintenance Requests</h1>
+<form action="/browse_requests" method="post">
+    <label for="apartment_number">Apartment Number:</label>
+    <input type="text" name="apartment_number">
+
+    <label for="area_of_problem">Area of Problem:</label>
+    <input type="text" name="area_of_problem">
+
+    <label for="start_date">Start Date:</label>
+    <input type="date" name="start_date">
+
+    <label for="end_date">End Date:</label>
+    <input type="date" name="end_date">
+
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="pending">Pending</option>
+        <option value="completed">Completed</option>
+    </select>
+
+    <input type="submit" value="Filter Requests">
+</form>
+
+</body>
+</html>
